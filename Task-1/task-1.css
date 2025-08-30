@@ -1,0 +1,489 @@
+<style>
+.contact-form__form.kam-world{
+  display: none;
+}
+/* Overlay covers whole page */
+#contact-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* glass wall effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 1.5s ease forwards;
+
+}
+@keyframes fadeIn {
+  from {
+    background: rgba(0, 0, 0, 0);  /* transparent */
+  }
+  to {
+    background: rgba(0, 0, 0, 0.4); /* final color */
+  }
+}
+
+/* Contact Section */
+#contact-section {
+  position: absolute;
+  right: 25px;
+  background: #f2f2f2;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Typography */
+#contact-section h1 {
+  font-size: 2rem;
+  margin: 0;
+  line-height: 30px;
+}
+#contact-section p {
+  font-size: 1rem;
+  margin: 0 0 35px 0;
+}
+
+/* Button */
+
+/* Back box */
+
+#contact-section button {
+  position: relative;
+  padding: 19px 11px;
+  background: #1bce1b;
+  cursor: pointer;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  z-index: 100000000;
+  max-width: 100%;
+  opacity: 0.8;
+  margin: 0 0 0 auto;
+  transition: all 0.5s ease-out;
+}
+#contact-section .btn-wrap{
+  position: relative;
+  z-index: 100000;
+}
+#contact-section .btn-wrap .blackbox{
+  width: 112.29px;
+  height: 68px;
+  left: -7px;
+  top: -4px;
+  background: #000;
+  position: absolute;
+  z-index: -1;
+  transition: all 0.25s ease;
+}
+#contact-section .btn-wrap .blackbox2{
+  background: #000;
+  width: 135px;
+  left: -20px;
+  height: 56px;
+  position: absolute;
+  top: 3px;
+  z-index: -1;
+  transition: all 0.25s ease;
+}
+
+.btn-wrap:has(#contact-btn:focus) .blackbox,
+.btn-wrap:has(#contact-btn:focus) .blackbox2 {
+  display: none;
+}
+.btn-wrap:has(#contact-btn:focus) .subbox2 {
+    opacity: 1;
+    top: -1px;
+    left: -18px;
+    width: 132px;
+    height: 62px;
+   
+}
+.btn-wrap:has(#contact-btn:focus) #contact-btn::before{
+  opacity: 1;
+}
+.btn-wrap:has(#contact-btn:focus) .subbox
+{
+  opacity: 1;
+  top: -3px;
+  background: transparent;
+  border: 3px solid blue;
+}
+
+/* disabled */
+
+.btn-wrap:has(#contact-btn:disabled) .subbox,
+.btn-wrap:has(#contact-btn:disabled) .subbox2 {
+  display: none;
+}
+.btn-wrap:has(#contact-btn:disabled) #contact-btn {
+  background: #fff;   /* disabled button color */
+  color: #9e9994;        /* disabled text */
+  cursor: not-allowed;
+}
+.btn-wrap:has(#contact-btn:disabled) .blackbox,
+.btn-wrap:has(#contact-btn:disabled) .blackbox2 {
+  background: #9e9994; /* disabled background color */
+}
+.btn-wrap:has(#contact-btn:disabled) #contact-btn::before {
+  background: #fff; /* your disabled overlay color */
+  opacity: 1;
+}
+
+/* active */
+
+/* === Pressed State === */
+.btn-wrap:has(#contact-btn:active) .subbox,
+.btn-wrap:has(#contact-btn:active) .subbox2 {
+  display: none;
+}
+
+.btn-wrap:has(#contact-btn:active) #contact-btn {
+  background: #51a851;   /* pressed button color */    
+}
+
+.btn-wrap:has(#contact-btn:active) .blackbox,
+.btn-wrap:has(#contact-btn:active) .blackbox2 {
+  background: #000; /* pressed background */
+}
+
+.btn-wrap:has(#contact-btn:active) #contact-btn::before {
+  background: #51a851;  /* pressed overlay */
+  opacity: 1;
+}
+
+#contact-section button::before {
+  content: "";
+  position: absolute;
+  width: 128px;
+  background: #51a851;
+  height: 47px;
+  left: -16px;
+  top: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  opacity: 0.7;
+  z-index: -1;
+ transition: all 0.25s ease;
+}
+
+#contact-section button:hover::before  {
+  background: #51a851;
+  opacity: 0.9;
+}
+
+/* Modal */
+.modal {
+ position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 100000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95);   /* slightly smaller */
+  transition: all 0.3s ease;
+}
+
+@keyframes zoomOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.modal.open {
+   opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  pointer-events: auto; 
+  position: relative;
+  z-index: 10000; /* above overlay */
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Progress Bar */
+.custom-progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-bottom: 2rem;
+}
+.custom-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.custom-step .circle {
+  width: 40px;
+  height: 40px;
+  background: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  font-size: 18px;
+  z-index: 2;
+  position: relative;
+  transition: background 0.4s ease;
+}
+.custom-step.active .circle {
+  background: #0056b3;
+}
+.custom-step.done .circle {
+  background: #0056b3;
+  position: relative;
+}
+.custom-step.done .circle .checkmark {
+  display: block;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  background: #28a745;
+  top: 17%;
+  right: -10px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.checkmark{
+  display: none;
+}
+.custom-step.done .checkmark {
+  font-size: 20px;
+}
+.custom-step p {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #5475cd;
+  text-align: center;
+  max-width: 80px;
+}
+.line {
+  flex: 1;
+  height: 4px;
+  background: #ccc;
+  position: relative;
+  top: -20px;
+  z-index: 1;
+  margin: 0 -15px;
+  overflow: hidden;
+  border-radius: 2px;
+}
+/* This is the green fill */
+.line::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  background: #5475cd;
+  top: 0;
+  left: 0;
+  transition: width 0.5s ease;
+}
+.custom-step.done + .line::before {
+  width: 100%;
+}
+.contact-btn-wrapper{
+  display: block;
+  display: flex;
+  width: 100%;
+  justify-content: end;
+}
+.subbox2{
+  width: 112.29px;
+  top: 6px;
+  left: -7px;
+  height: 68px;
+  background: #000;
+  position: absolute;
+  opacity: 0.4;
+  transition: all 0.25s ease;
+ }
+ .subbox{
+  height: 100px;
+  width: 100px;
+  background: #000;
+  width: 136px;
+  height: 66px;
+  top: 3px;
+  position: absolute;
+  left: -20px;
+  opacity: 0.4;
+  z-index: -1;
+  transition: all 0.25s ease;
+ }
+.custom-step .circle {
+  width: 48px;
+  height: 48px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  border: 2px solid #ccc;
+  transition: background 0.5s ease, transform 0.3s ease;
+}
+
+.custom-step .icon {
+  width: 24px;
+  height: 24px;
+  fill: #5475cd;
+}
+
+.custom-step.active .circle {
+   transform: scale(1.1);
+}
+
+.custom-step.done .circle {
+   transform: scale(1.1);
+}
+
+.custom-step .icon path {
+  fill: #5475cd;
+  transition: fill 0.5s ease;
+}
+.custom-step.active .icon path {
+  fill: #fff; /* stays white, but you can change */
+}
+.custom-step.done .icon path {
+  fill: #fff; /* also stays white */
+}
+.custom-step.active p{
+  font-weight: bold;
+}
+/* Form steps */
+.form-step {
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-step.active {
+  display: flex;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.checkbox-wrap{
+  flex-direction: row;
+}
+#multiStepForm input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #007bff;
+    appearance: auto;
+    border: initial;
+}
+#multiStepForm input[type="text"],
+#multiStepForm input[type="email"],
+#multiStepForm textarea {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+#multiStepForm button {
+cursor: pointer;
+background: #007bff;
+color: white;
+border: none;
+padding: 0.6rem 1rem;
+border-radius: 6px;
+transition: background 0.3s ease;
+}
+
+#multiStepForm button:hover {
+  background: #0056b3;
+}
+
+/* Responsive */
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  #contact-section button{
+    max-width: 100%;
+  }
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+  #contact-section {
+    padding: 1.5rem;
+  }
+  #contact-section h1 {
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 375px) {
+
+  .intro h2 {
+    font-size: 1.25rem;
+  }
+  .progress-step {
+    font-size: 0.75rem;
+  }
+  #contact-section {
+    width: 95%;
+    padding: 1rem;
+  }
+  #contact-section h1 {
+    font-size: 1.25rem;
+  }
+  #contact-section p {
+    font-size: 0.9rem;
+  }
+}
+</style>
