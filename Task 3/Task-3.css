@@ -1,15 +1,15 @@
 
 <style>
 .lm-hero {
-  height: 38rem;
-  display: flex; /* Flex used here */
+  height: 38rem !important;
+  display: flex !important; /* Flex used here */
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
 }
 
 .lm-hero .lm-hero__left .lm-hero__header {
-  max-width: 35rem;
+  max-width: 35rem !important;
 }
 
 /* Value proposition using Grid */
@@ -51,17 +51,17 @@
 
 @media (max-width: 1100px) {
   .lm-hero {
-    height: 45rem;
+    height: 45rem !important;
   }
   .lm-hero .lm-hero__left .lm-hero__image {
-    right: 0%;
-    width: 35rem;
+    right: 0% !important;
+    width: 35rem !important;
   }
 }
 
 @media (max-width: 950px) {
   .lm-hero {
-    height: 65rem;
+    height: 65rem !important;
   }
 
   .value-prop {
@@ -70,8 +70,8 @@
   }
 
   .lm-hero .lm-hero__left .lm-hero__image {
-    max-width: 22rem;
-    min-width: 21rem;
+    max-width: 22rem !important;
+    min-width: 21rem !important;
   }
 }
 

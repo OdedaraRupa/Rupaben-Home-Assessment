@@ -453,6 +453,9 @@ transition: background 0.3s ease;
 
 /* Responsive */
 @media (max-width: 768px) {
+  #contact-section{
+    right: auto !important;
+  }
   #contact-section button{
     max-width: 100%;
   }

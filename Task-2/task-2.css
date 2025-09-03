@@ -283,7 +283,9 @@ transform: rotate(315deg) translate(2px, -6px);
   /* tweak layout for vertical tablet */
 }
 @media (max-width: 768px) {
-  /* phone layout */
+ #drawer-tab{
+  width: 80% !important;
+ }
 }
 
 </style>
